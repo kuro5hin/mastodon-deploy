@@ -7,9 +7,9 @@ cd $DIR
 
 # generate a db snapshot before the upgrade
 echo "Backing up the database to /home/rusty/backup/mastodon-backup-upgrade-snapshot.sql.gz..."
-/usr/bin/docker exec mastodon_db_1 pg_dump --clean postgres -U postgres | gzip > /home/rusty/backup/mastodon-backup-upgrade-snapshot.sql.gz
+/usr/bin/docker exec mastodondeploy_db_1 pg_dump --clean postgres -U postgres | gzip > /home/rusty/backup/mastodon-backup-upgrade-snapshot.sql.gz
 # Reload this tarball with
-# /usr/bin/docker exec mastodon_db_1 psql postgres -U postgres < gzip -c -d /home/rusty/backup/mastodon-backup-upgrade-snapshot.sql.gz
+# cat /home/rusty/backup/mastodon-backup-upgrade-snapshot.sql.gz | gunzip | /usr/bin/docker exec -i mastodondeploy_db_1 psql postgres -U postgres 
 
 # tag the old images for rollback
 echo "Tagging current mastodon images :rollback..."
